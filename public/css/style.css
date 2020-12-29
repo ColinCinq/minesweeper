@@ -1,0 +1,111 @@
+@import url('./header.css');
+@import url('./footer.css');
+
+body > .container {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+
+.index a {
+	color: black;
+	text-decoration: none;
+}
+.index a:hover {
+	text-decoration: none;
+}
+
+/* scroll bar chrome */
+::-webkit-scrollbar {
+	width: 10px;
+}
+::-webkit-scrollbar-track {
+	background: #2a2a2a; 
+}
+::-webkit-scrollbar-thumb {
+	background: #8a8a8a; 
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #555; 
+}
+
+body {
+	background: #222;
+}
+
+.cf {
+	clear: both;
+}
+
+.game {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+
+button {
+	margin-bottom: 10px;
+}
+
+#minefield {
+	border: 1px solid #555;
+}
+
+.square {
+	position: relative;
+	float: left;
+	width: 20px;
+	height: 20px;
+	background: #111;
+	border: 1px solid #555;
+	transition: all 0.2s;
+	color: #ddd;
+	text-align: center;
+	line-height: 20px;
+	font-weight: bold;
+	font-size: 10px;
+}
+.square:not(.found):hover {
+	border-color: #aa0000;
+	cursor: pointer;
+}
+
+.found {
+	background: #444;
+}
+
+.mine:after,
+.flag:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 10px;
+	height: 10px;
+	margin: 5px;
+	background: #0055ee;
+}
+
+.mine:after {
+	background: #aa0000;
+	border-radius: 50%;
+}
+
+#debug {
+	color: white;
+}
+
+.winner {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#counter {
+	font-weight: bold;
+	padding-left: 20px;
+	color: #ddd;
+}

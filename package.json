@@ -1,0 +1,12 @@
+{
+    "name": "messenger_analyse",
+    "version": "0.1.0",
+    "dependencies": {
+        "express": "^4.17.1",
+        "nodemon": "^2.0.3",
+        "twig": "^1.15.1"
+    },
+    "scripts": {
+        "start": "nodemon -e .js,.twig,.css app.js"
+    }
+}
