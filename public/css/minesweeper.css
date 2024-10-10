@@ -1,0 +1,65 @@
+.game {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	color: #ddd;
+}
+
+#top {
+	height: 135px;
+}
+
+#lost>div {
+	font-size: 50px;
+}
+
+#minefield {
+	border: 1px solid #555;
+	-webkit-user-select: none;	/* Safari */
+	-ms-user-select: none;	/* IE 10 and IE 11 */
+	user-select: none;	/* Standard syntax */
+}
+
+.square {
+	position: relative;
+	float: left;
+	width: 25px;
+	height: 25px;
+	background: #111;
+	border: 1px solid #555;
+	transition: all 0.2s;
+	color: #ddd;
+	text-align: center;
+	line-height: 25px;
+	font-weight: bold;
+	font-size: 15px;
+	cursor: default;
+}
+
+.square:not(.found):hover {
+	border-color: #aa0000;
+	cursor: pointer;
+}
+
+.found {
+	background: #444;
+}
+
+.mine:after,
+.flag:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 10px;
+	height: 10px;
+	margin: 5px;
+	background: #0055ee;
+}
+
+.mine:after {
+	background: #aa0000;
+	border-radius: 50%;
+}

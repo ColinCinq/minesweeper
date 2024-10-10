@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Démineur
+{% endblock %}
+
+{% block style %}<link href="/css/minesweeper.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+	<div class="game">
+		<div id="top">
+			<div id="menu">
+				<button id="start">Start</button>
+				<div class="form-check form-switch">
+					<input class="form-check-input" type="checkbox" role="switch" id="swithAutoSolver">
+					<label class="form-check-label" for="swithAutoSolver">Auto Solver</label>
+				</div>
+			</div>
+			<div id="lost" class="d-none">
+				<div class="text-white text-center">Perdu!</div>
+				<button type="button" class="btn btn-outline-danger">Recommencer</button>
+			</div>
+		</div>
+
+		<div id="minefield"></div>
+	</div>
+
+{% endblock %}
+
+{% block script %}
+	<script src="/js/minesweeper/main.js" type="module"></script>
+{% endblock %}

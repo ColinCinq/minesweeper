@@ -1,9 +1,9 @@
 // setup
-var width = 30;
+var width = 50;
 var height = 16;
 var minescount = 99;
 $('.game').css({
-    "width": (width * 22 + 2)+"px",
+    "width": (width * 20 + 2)+"px",
     "height": (height * 22 + 2)+"px"
 });
 var field = $('#minefield');
