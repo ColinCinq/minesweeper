@@ -1,6 +1,10 @@
+import config from "../config.js";
+
+
 function humanGame(grid) {
     $('.square:not(.found)').on("contextmenu", function (evt) { evt.preventDefault() })
     $('.square:not(.found)').mousedown(function (event) {
+
         let x = $(this).data('x'),
             y = $(this).data('y')
         if (!grid.isRevealed(x, y)) {
@@ -9,20 +13,26 @@ function humanGame(grid) {
                     //alert('Middle Mouse button pressed.')
                     break;
                 case 3:
-                    $(this).toggleClass('flag')
+                    if (grid.isFlag(x, y))
+                        removeFlag(grid, x, y)
+                    else
+                        placeFlag(grid, x, y)
                     break;
                 default:
-                    if ($(this).hasClass('flag')) {
-                        $(this).removeClass('flag')
+                    if (grid.isFlag(x, y)) {
+                        removeFlag(grid, x, y)
                     } else {
                         let value = grid.revealCell(x, y)
 
                         if (value == 'mine') {
-                            $('#menu').addClass('d-none')
-                            $('#lost').removeClass('d-none')
+                            $(this).addClass('found')
+                            lostGame(grid)
+
                         } else {
                             $(this).addClass('found')
                             displayCell(grid, $(this), value)
+                            if (grid.getUnrevealedCells().length == config.numberOfMines)
+                                winGame(grid)
                         }
                     }
             }
@@ -49,4 +59,38 @@ function displayCell(grid, cell, value) {
             }
         })
     }
+}
+
+function placeFlag(grid, x, y) {
+    if (!grid.isRevealed(x, y)) {
+        grid.addFlag(x, y)
+        $('.square[data-x=' + x + '][data-y=' + y + ']').addClass('flag')
+    }
+}
+
+function removeFlag(grid, x, y) {
+    if (!grid.isRevealed(x, y)) {
+        grid.removeFlag(x, y)
+        $('.square[data-x=' + x + '][data-y=' + y + ']').removeClass('flag')
+    }
+}
+
+function lostGame(grid) {
+    $('#menu').addClass('d-none')
+    $('#lost').removeClass('d-none')
+    $('#cover').removeClass('d-none')
+
+    grid.getMines().forEach((mine) => {
+        $('.square[data-x=' + mine[0] + '][data-y=' + mine[1] + ']').addClass('mine')
+    })
+}
+
+function winGame(grid) {
+    $('#menu').addClass('d-none')
+    $('#win').removeClass('d-none')
+    $('#cover').removeClass('d-none')
+
+    grid.getMines().forEach((mine) => {
+        $('.square[data-x=' + mine[0] + '][data-y=' + mine[1] + ']').addClass('flag')
+    })
 }

@@ -3,5 +3,8 @@ import * as grid from './model/grid.js';
 import initGrid from './controller/initialisation.js';
 //import * as game from './controller/gameplay.js'
 
-initGrid(config, grid)
 
+initGrid(config, grid)
+$('.restart').click(function (e) {
+    initGrid(config, grid)
+})

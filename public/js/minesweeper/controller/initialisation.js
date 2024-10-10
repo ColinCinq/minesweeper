@@ -2,6 +2,12 @@ import * as game from './gameplay.js'
 
 function initGrid(config, grid) {
 
+    $('#grid').empty()
+    $('#menu').removeClass('d-none')
+    $('#lost').addClass('d-none')
+    $('#win').addClass('d-none')
+    $('#cover').addClass('d-none')
+
     grid.initGrid(config)
 
     if (config.numberOfMines > (config.width * config.height - 2))
@@ -14,7 +20,7 @@ function initGrid(config, grid) {
 
         for (let ii = 0; ii < config.height; ii++) {
             for (let jj = 0; jj < config.width; jj++) {
-                $('#minefield').append('<div class="square" data-x="' + ii + '" data-y="' + jj + '"></div>')
+                $('#grid').append('<div class="square" data-x="' + ii + '" data-y="' + jj + '"></div>')
             }
         }
 

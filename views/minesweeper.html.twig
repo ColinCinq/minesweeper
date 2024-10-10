@@ -18,11 +18,18 @@
 			</div>
 			<div id="lost" class="d-none">
 				<div class="text-white text-center">Perdu!</div>
-				<button type="button" class="btn btn-outline-danger">Recommencer</button>
+				<button type="button" class="btn btn-outline-danger restart">Recommencer</button>
+			</div>
+			<div id="win" class="d-none">
+				<div class="text-white text-center">Gagné!</div>
+				<button type="button" class="btn btn-outline-success restart">Recommencer</button>
 			</div>
 		</div>
 
-		<div id="minefield"></div>
+		<div id="minefield">
+			<div id="grid"></div>
+			<div id="cover" class="d-none"></div>
+		</div>
 	</div>
 
 {% endblock %}
