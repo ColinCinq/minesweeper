@@ -5,8 +5,8 @@ let grid,
     playing = false
 
 export function initGrid(config) {
-    grid = Array.from(Array(config.width), () => new Array(config.height).fill(0))
-    revealed = Array.from(Array(grid.length), () => new Array(grid[0].length).fill(false))
+    grid = Array.from(Array(config.height), () => new Array(config.width).fill(0))
+    revealed = Array.from(Array(grid[0].length), () => new Array(grid.length).fill(false))
     flags = []
 }
 

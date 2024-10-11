@@ -8,6 +8,10 @@ function initGrid(config, grid) {
     $('#win').addClass('d-none')
     $('#cover').addClass('d-none')
 
+    config.height = Number($('#height').val())
+    config.width = Number($('#width').val())
+    config.numberOfMines = Number($('#mines-qty').val())
+    
     grid.initGrid(config)
 
     if (config.numberOfMines > (config.width * config.height - 2))
@@ -24,6 +28,8 @@ function initGrid(config, grid) {
             }
         }
 
+        game.displayFlag(grid)
+
         $('.square').mousedown(function (e) {
             $('.square').unbind()
             let x = $(this).data('x'),
@@ -39,6 +45,7 @@ function initGrid(config, grid) {
             while (mines.length < config.numberOfMines) {
                 mines.push(minePosibility.splice(Math.floor((Math.random() * minePosibility.length)), 1)[0])
             }
+            
             grid.setMines(mines)
             grid.setPlaying(true)
 

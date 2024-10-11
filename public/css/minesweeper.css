@@ -5,10 +5,32 @@
 	transform: translate(-50%, -50%);
 	text-align: center;
 	color: #ddd;
+	font-family: 'Roboto Mono';
 }
 
 #top {
-	height: 135px;
+	height: 150px;
+	width: 400px;
+	font-size: .875rem;
+}
+
+.input-group-text {
+	min-width: 32px;
+	min-height: 31px;
+	padding: 0 !important;
+}
+
+.img-mine::after {
+	content: url('../img/police-officer-head-black.svg');
+	position: relative;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, 8%);
+	width: 20px;
+}
+
+#mines-qty {
+	
 }
 
 #lost>div,
@@ -17,21 +39,20 @@
 }
 
 #minefield {
-	border: 1px solid #555;
-	-webkit-user-select: none;
-	/* Safari */
-	-ms-user-select: none;
-	/* IE 10 and IE 11 */
-	user-select: none;
-	/* Standard syntax */
 	position: relative;
+	left: 50%;
+	transform: translate(-50%, 0%);
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
-#minefield>div {
+#grid {
 	width: 100%;
 	height: 100%;
 	top: 0;
 	left: 0;
+	padding: 0;
 }
 
 #cover {
@@ -69,19 +90,18 @@
 	background: #444;
 }
 
-.mine:after,
 .flag:after {
-	content: "";
+	content: url('../img/molotov.svg');
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 10px;
-	height: 10px;
-	margin: 5px;
-	background: #0055ee;
+	width: 23px;
 }
 
-.mine:after {
-	background: #aa0000;
-	border-radius: 50%;
+.mine::after {
+	content: url('../img/police-officer-head.svg');
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 23px;
 }

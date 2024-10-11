@@ -1,7 +1,6 @@
 import config from "../config.js";
 
-
-function humanGame(grid) {
+export function humanGame(grid) {
     $('.square:not(.found)').on("contextmenu", function (evt) { evt.preventDefault() })
     $('.square:not(.found)').mousedown(function (event) {
 
@@ -40,8 +39,6 @@ function humanGame(grid) {
     })
 }
 
-export { humanGame }
-
 function displayCell(grid, cell, value) {
 
     cell.addClass('found')
@@ -65,6 +62,7 @@ function placeFlag(grid, x, y) {
     if (!grid.isRevealed(x, y)) {
         grid.addFlag(x, y)
         $('.square[data-x=' + x + '][data-y=' + y + ']').addClass('flag')
+        displayFlag(grid)
     }
 }
 
@@ -72,7 +70,12 @@ function removeFlag(grid, x, y) {
     if (!grid.isRevealed(x, y)) {
         grid.removeFlag(x, y)
         $('.square[data-x=' + x + '][data-y=' + y + ']').removeClass('flag')
+        displayFlag(grid)
     }
+}
+
+export function displayFlag(grid) {
+    $('#mines-qty-display').text('mines restantes : ' + (config.numberOfMines - grid.getFlags().length))
 }
 
 function lostGame(grid) {

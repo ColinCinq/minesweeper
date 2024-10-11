@@ -3,30 +3,54 @@
 {% block title %}Démineur
 {% endblock %}
 
-{% block style %}<link href="/css/minesweeper.css" rel="stylesheet"/>
+{% block style %}
+	<link href="/css/minesweeper.css" rel="stylesheet"/>
+	<link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
 {% endblock %}
 
 {% block body %}
-	<div class="game">
-		<div id="top">
-			<div id="menu">
-				<button id="start">Start</button>
-				<div class="form-check form-switch">
-					<input class="form-check-input" type="checkbox" role="switch" id="swithAutoSolver">
-					<label class="form-check-label" for="swithAutoSolver">Auto Solver</label>
+	<div class="game" class=" container">
+		<div id="top" class="row">
+			<div id="menu" class="row">
+				<div class="col-4">
+					<div class="input-group input-group-sm flex-nowrap col-12 mb-1">
+						<span class="input-group-text justify-content-center">↕</span>
+						<input type="number" value="10" step="1" min="1" max="500" id="height" class="form-control" placeholder="Hauteur"/>
+					</div>
+					<div class="input-group input-group-sm flex-nowrap col-12 mb-1">
+						<span class="input-group-text justify-content-center">↔</span>
+						<input type="number" value="10" step="1" min="1" max="500" id="width" class="form-control" placeholder="Largeur"/>
+					</div>
+					<div class="input-group input-group-sm flex-nowrap align-items-center col-12 mb-1">
+						<span class="input-group-text img-mine"></span>
+						<input type="number" value="10" step="1" min="1" max="500" id="mines-qty" class="form-control" placeholder="Mines"/>
+					</div>
+				</div>
+				<div class="col-8 align-items-end">
+					<div class="col-12">
+						<button type="button" class="btn btn-outline-secondary restart">Recommencer</button>
+					</div>
+					<div class="col-12 mt-4">
+						<span id="mines-qty-display">mines restantes :</span>
+					</div>
 				</div>
 			</div>
-			<div id="lost" class="d-none">
-				<div class="text-white text-center">Perdu!</div>
-				<button type="button" class="btn btn-outline-danger restart">Recommencer</button>
+
+			<div id="lost" class="d-none row">
+				<div class="text-white text-center col-12">Perdu!</div>
+				<div class="col-12">
+					<button type="button" class="btn btn-outline-danger restart">Recommencer</button>
+				</div>
 			</div>
-			<div id="win" class="d-none">
+			<div id="win" class="d-none row">
 				<div class="text-white text-center">Gagné!</div>
-				<button type="button" class="btn btn-outline-success restart">Recommencer</button>
+				<div class="col-12">
+					<button type="button" class="btn btn-outline-success restart">Recommencer</button>
+				</div>
 			</div>
 		</div>
 
-		<div id="minefield">
+		<div id="minefield" class="row">
 			<div id="grid"></div>
 			<div id="cover" class="d-none"></div>
 		</div>
