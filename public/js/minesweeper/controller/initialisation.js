@@ -11,7 +11,7 @@ function initGrid(config, grid) {
     config.height = Number($('#height').val())
     config.width = Number($('#width').val())
     config.numberOfMines = Number($('#mines-qty').val())
-    
+
     grid.initGrid(config)
 
     if (config.numberOfMines > (config.width * config.height - 2))
@@ -28,29 +28,32 @@ function initGrid(config, grid) {
             }
         }
 
-        game.displayFlag(grid)
+        game.displayFlagCounter(grid)
 
+        $('.square').on("contextmenu", function (evt) { evt.preventDefault() })
         $('.square').mousedown(function (e) {
-            $('.square').unbind()
-            let x = $(this).data('x'),
-                y = $(this).data('y'),
-                noMine = [...[[x, y]], ...grid.getSurroundCells(x, y)]
+            if (e.which == 1) {
+                $('.square').unbind()
+                let x = $(this).data('x'),
+                    y = $(this).data('y'),
+                    noMine = [...[[x, y]], ...grid.getSurroundCells(x, y)]
 
-            if (config.numberOfMines > (config.width * config.height - noMine.length))
-                noMine = [[x, y]]
+                if (config.numberOfMines > (config.width * config.height - noMine.length))
+                    noMine = [[x, y]]
 
-            let minePosibility = grid.getSafeCells().filter((cell) => { return !(noMine.indexOfArray(cell) != -1) }),
-                mines = []
+                let minePosibility = grid.getSafeCells().filter((cell) => { return !(noMine.indexOfArray(cell) != -1) }),
+                    mines = []
 
-            while (mines.length < config.numberOfMines) {
-                mines.push(minePosibility.splice(Math.floor((Math.random() * minePosibility.length)), 1)[0])
+                while (mines.length < config.numberOfMines) {
+                    mines.push(minePosibility.splice(Math.floor((Math.random() * minePosibility.length)), 1)[0])
+                }
+
+                grid.setMines(mines)
+
+                game.humanGame(grid)
+                $(this).trigger("mousedown")
             }
-            
-            grid.setMines(mines)
-            grid.setPlaying(true)
 
-            game.humanGame(grid)
-            $(this).trigger("mousedown")
         })
     }
 }

@@ -1,8 +1,7 @@
 let grid,
     revealed,
     mines,
-    flags,
-    playing = false
+    flags
 
 export function initGrid(config) {
     grid = Array.from(Array(config.height), () => new Array(config.width).fill(0))
@@ -20,11 +19,15 @@ export function getMines() {
 }
 
 export function isFlag(x, y) {
-    return flags.indexOfArray([x, y]) != -1
+    return flags.containsArray([x, y])
 }
 export function addFlag(x, y) {
-    if (!isFlag(x, y))
+    let success = false
+    if (!isFlag(x, y)) {
         flags.push([x, y])
+        success = true
+    }
+    return success
 }
 export function removeFlag(x, y) {
     if (isFlag(x, y))
@@ -32,13 +35,6 @@ export function removeFlag(x, y) {
 }
 export function getFlags() {
     return flags
-}
-
-export function setPlaying(bool) {
-    playing = bool
-}
-export function getPlaying() {
-    return playing
 }
 
 export function getSurroundCells(x, y, option) {
