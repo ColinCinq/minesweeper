@@ -93,7 +93,7 @@ export function getUnrevealedCells() {
     let unrevealedCells = []
     for (let ii = 0; ii < grid.length; ii++) {
         for (let jj = 0; jj < grid[0].length; jj++) {
-            if (!isRevealed(ii, jj))
+            if (!isRevealed([ii, jj]))
                 unrevealedCells.push([ii, jj])
         }
     }
@@ -128,7 +128,7 @@ export function computePartialGridNumber(partialGrid) {
             if (partialGrid[ii][jj] != 'mine') {
                 let count = 0
 
-                getSurroundCells(ii, jj).forEach(cell => {
+                getSurroundCells([ii, jj]).forEach(cell => {
                     if (partialGrid[cell[0]][cell[1]] == 'mine')
                         count++
                 })
@@ -148,7 +148,7 @@ function computeGridNumber() {
             if (grid[ii][jj] != 'mine') {
                 let count = 0
 
-                getSurroundCells(ii, jj).forEach(cell => {
+                getSurroundCells([ii, jj]).forEach(cell => {
                     if (grid[cell[0]][cell[1]] == 'mine')
                         count++
                 })

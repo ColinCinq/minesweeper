@@ -87,12 +87,12 @@
 }
 
 .found {
-	animation: color-reveal 0.5s linear;
+	animation: color-reveal 0.4s linear;
 	background: #444;
 }
 
 .flag {
-	animation: color-flag 0.5s linear;
+	animation: color-flag 0.7s linear;
 }
 
 .flag:after {
@@ -118,14 +118,17 @@
 @keyframes color-reveal {
 	0% {
 		background: #111;
+		color: #111;
 	}
   
 	50% {
-		background: #999;
+		background: #ddd;
+		color: #ddd;
 	}
   
 	100% {
 		background: #444;
+		color: #ddd;
 	}
   }
 

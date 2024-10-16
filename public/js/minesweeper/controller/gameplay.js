@@ -49,15 +49,7 @@ export function displayCell(grid, cell, value) {
     if (value != 0) {
         cell.text(value)
     } else {
-        grid.getSurroundCells(coord, 'unrevealed').forEach(coordNeighbour => {
-
-            if (!grid.isRevealed(coordNeighbour)) {
-                let newCell = $('.square[data-x=' + coordNeighbour[0] + '][data-y=' + coordNeighbour[1] + ']'),
-                    value = grid.revealCell(coordNeighbour)
-                newCell.addClass('found')
-                displayCell(grid, newCell, value)
-            }
-        })
+        display0(grid, coord)
     }
 
     if (grid.getUnrevealedCells().length == config.numberOfMines)
@@ -65,8 +57,46 @@ export function displayCell(grid, cell, value) {
 }
 
 export function display0(grid, coordOrigin) {
+    let displayOrder = [[coordOrigin]],
+        ii = 0
 
+    while (displayOrder[ii].length > 0) {
+        displayOrder[ii + 1] = []
+
+        displayOrder[ii].forEach(coord => {
+            let value = grid.revealCell(coord)
+            if (value == 0) {
+                grid.getSurroundCells(coord, 'unrevealed').forEach(coordNeighbour => {
+
+                    if (!grid.isRevealed(coordNeighbour)) {
+                        displayOrder[ii + 1].push(coordNeighbour)
+                    }
+                })
+            }
+        })
+        ii++
+    }
+
+    let time = 0
+    displayOrder.forEach(coordsList => {
+        if (coordsList.length > 0) {
+            setTimeout(() => {
+                coordsList.forEach(coord => {
+                    let cell = $('.square[data-x=' + coord[0] + '][data-y=' + coord[1] + ']'),
+                        value = grid.getCell(coord)
+
+                    cell.addClass('found')
+                    if (value != 0)
+                        cell.text(value)
+                })
+            }, time)
+            time += 100
+        }
+    })
+
+    return time
 }
+
 
 export function placeFlag(grid, coord) {
     let success = false
