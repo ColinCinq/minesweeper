@@ -5,31 +5,30 @@ export function humanGame(grid) {
     $('.square').on("contextmenu", function (evt) { evt.preventDefault() })
     $('.square:not(.found)').mousedown(function (event) {
 
-        let x = $(this).data('x'),
-            y = $(this).data('y')
+        let coord = [$(this).data('x'), $(this).data('y')]
 
         switch (event.which) {
             case 2:
                 //middle click
-                /* $('.square').removeClass('debug')
-                solver.getCluster(grid, x, y).forEach((coord) => {
-                    $('.square[data-x=' + coord[0] + '][data-y=' + coord[1] + ']').addClass('debug')
-                })
-                solver.singlePointEntry(grid, x, y) */
+                // $('.square').removeClass('debug')
+                // solver.getCluster(grid, x, y).forEach((coord) => {
+                //     $('.square[data-x=' + coord[0] + '][data-y=' + coord[1] + ']').addClass('debug')
+                // })
+                solver.recurSinglePointEntry(grid, coord)
                 break
             case 3:
                 //right click
-                if (grid.isFlag(x, y))
-                    removeFlag(grid, x, y)
-                else if (!grid.isRevealed(x, y))
-                    placeFlag(grid, x, y)
+                if (grid.isFlag(coord))
+                    removeFlag(grid, coord)
+                else if (!grid.isRevealed(coord))
+                    placeFlag(grid, coord)
                 break
             default:
                 //left click and other
-                if (grid.isFlag(x, y)) {
-                    removeFlag(grid, x, y)
-                } else if (!grid.isRevealed(x, y)) {
-                    let value = grid.revealCell(x, y)
+                if (grid.isFlag(coord)) {
+                    removeFlag(grid, coord)
+                } else if (!grid.isRevealed(coord)) {
+                    let value = grid.revealCell(coord)
 
                     if (value == 'mine') {
                         $(this).addClass('found')
@@ -44,18 +43,17 @@ export function humanGame(grid) {
 }
 
 export function displayCell(grid, cell, value) {
-    let x = cell.data('x'),
-        y = cell.data('y')
+    let coord = [cell.data('x'), cell.data('y')]
     cell.addClass('found')
 
     if (value != 0) {
         cell.text(value)
     } else {
-        grid.getSurroundCells(x, y, 'unrevealed').forEach(coord => {
+        grid.getSurroundCells(coord, 'unrevealed').forEach(coordNeighbour => {
 
-            if (!grid.isRevealed(coord[0], coord[1])) {
-                let newCell = $('.square[data-x=' + coord[0] + '][data-y=' + coord[1] + ']'),
-                    value = grid.revealCell(coord[0], coord[1])
+            if (!grid.isRevealed(coordNeighbour)) {
+                let newCell = $('.square[data-x=' + coordNeighbour[0] + '][data-y=' + coordNeighbour[1] + ']'),
+                    value = grid.revealCell(coordNeighbour)
                 newCell.addClass('found')
                 displayCell(grid, newCell, value)
             }
@@ -66,21 +64,25 @@ export function displayCell(grid, cell, value) {
         winGame(grid)
 }
 
-export function placeFlag(grid, x, y) {
+export function display0(grid, coordOrigin) {
+
+}
+
+export function placeFlag(grid, coord) {
     let success = false
-    if (!grid.isRevealed(x, y)) {
-        grid.addFlag(x, y)
-        $('.square[data-x=' + x + '][data-y=' + y + ']').addClass('flag')
+    if (!grid.isRevealed(coord)) {
+        grid.addFlag(coord)
+        $('.square[data-x=' + coord[0] + '][data-y=' + coord[1] + ']').addClass('flag')
         displayFlagCounter(grid)
         success = true
     }
     return success
 }
 
-function removeFlag(grid, x, y) {
-    if (!grid.isRevealed(x, y)) {
-        grid.removeFlag(x, y)
-        $('.square[data-x=' + x + '][data-y=' + y + ']').removeClass('flag')
+function removeFlag(grid, coord) {
+    if (!grid.isRevealed(coord)) {
+        grid.removeFlag(coord)
+        $('.square[data-x=' + coord[0] + '][data-y=' + coord[1] + ']').removeClass('flag')
         displayFlagCounter(grid)
     }
 }

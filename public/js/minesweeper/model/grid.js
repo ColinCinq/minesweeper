@@ -18,27 +18,29 @@ export function getMines() {
     return mines
 }
 
-export function isFlag(x, y) {
-    return flags.containsArray([x, y])
+export function isFlag(coord) {
+    return flags.containsArray(coord)
 }
-export function addFlag(x, y) {
+export function addFlag(coord) {
     let success = false
-    if (!isFlag(x, y)) {
-        flags.push([x, y])
+    if (!isFlag(coord)) {
+        flags.push(coord)
         success = true
     }
     return success
 }
-export function removeFlag(x, y) {
-    if (isFlag(x, y))
-        flags.splice(flags.indexOfArray([x, y]), 1)
+export function removeFlag(coord) {
+    if (isFlag(coord))
+        flags.splice(flags.indexOfArray(coord), 1)
 }
 export function getFlags() {
     return flags
 }
 
-export function getSurroundCells(x, y, option) {
-    let theory = [[x - 1, y - 1], [x - 1, y], [x - 1, y + 1], [x, y - 1], [x, y + 1], [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]],
+export function getSurroundCells(coord, option) {
+    let x = coord[0],
+        y = coord[1],
+        theory = [[x - 1, y - 1], [x - 1, y], [x - 1, y + 1], [x, y - 1], [x, y + 1], [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]],
         real = []
     for (let ii = 0; ii < theory.length; ii++) {
         if (theory[ii][0] < grid.length && theory[ii][1] < grid[0].length && 0 <= theory[ii][0] && 0 <= theory[ii][1]) {
@@ -48,23 +50,23 @@ export function getSurroundCells(x, y, option) {
                     real.push(theory[ii])
                     break
                 case 'flag':
-                    if (isFlag(theory[ii][0], theory[ii][1]))
+                    if (isFlag(theory[ii]))
                         real.push(theory[ii])
                     break
                 case 'noflag':
-                    if (!isFlag(theory[ii][0], theory[ii][1]))
+                    if (!isFlag(theory[ii]))
                         real.push(theory[ii])
                     break
                 case 'revealed':
-                    if (isRevealed(theory[ii][0], theory[ii][1]))
+                    if (isRevealed(theory[ii]))
                         real.push(theory[ii])
                     break
                 case 'unrevealed':
-                    if (!isRevealed(theory[ii][0], theory[ii][1]))
+                    if (!isRevealed(theory[ii]))
                         real.push(theory[ii])
                     break
                 case 'unrevealed noflag':
-                    if (!isRevealed(theory[ii][0], theory[ii][1]) && !isFlag(theory[ii][0], theory[ii][1]))
+                    if (!isRevealed(theory[ii]) && !isFlag(theory[ii]))
                         real.push(theory[ii])
                     break
                 default:
@@ -98,15 +100,15 @@ export function getUnrevealedCells() {
     return unrevealedCells
 }
 
-export function isRevealed(x, y) {
-    return revealed[x][y]
+export function isRevealed(coord) {
+    return revealed[coord[0]][coord[1]]
 }
-export function revealCell(x, y) {
-    revealed[x][y] = true
-    return grid[x][y]
+export function revealCell(coord) {
+    revealed[coord[0]][coord[1]] = true
+    return grid[coord[0]][coord[1]]
 }
-export function getCell(x, y) {
-    return isRevealed(x, y) ? grid[x][y] : 'unrevealed'
+export function getCell(coord) {
+    return isRevealed(coord) ? grid[coord[0]][coord[1]] : 'unrevealed'
 }
 
 export function logGrid() {

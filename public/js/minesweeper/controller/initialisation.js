@@ -34,12 +34,11 @@ function initGrid(config, grid) {
         $('.square').mousedown(function (e) {
             if (e.which == 1) {
                 $('.square').unbind()
-                let x = $(this).data('x'),
-                    y = $(this).data('y'),
-                    noMine = [...[[x, y]], ...grid.getSurroundCells(x, y)]
+                let coord = [$(this).data('x'), $(this).data('y')],
+                    noMine = [...[coord], ...grid.getSurroundCells(coord)]
 
                 if (config.numberOfMines > (config.width * config.height - noMine.length))
-                    noMine = [[x, y]]
+                    noMine = [coord]
 
                 let minePosibility = grid.getSafeCells().filter((cell) => { return !(noMine.indexOfArray(cell) != -1) }),
                     mines = []
