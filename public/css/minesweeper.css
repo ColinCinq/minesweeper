@@ -1,147 +1,147 @@
 .game {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	text-align: center;
-	color: #ddd;
-	font-family: 'Roboto Mono';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #ddd;
+  font-family: "Roboto Mono";
 }
 
 #top {
-	height: 150px;
-	width: 400px;
-	font-size: .875rem;
+  height: 150px;
+  width: 400px;
+  font-size: 0.875rem;
 }
 
 .input-group-text {
-	min-width: 32px;
-	min-height: 31px;
-	padding: 0 !important;
+  min-width: 32px;
+  min-height: 31px;
+  padding: 0 !important;
 }
 
 .img-mine::after {
-	content: url('../img/police-officer-head-black.svg');
-	position: relative;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, 8%);
-	width: 20px;
+  content: url("../img/police-officer-head-black.svg");
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 8%);
+  width: 20px;
 }
 
-#mines-qty {
-	
-}
-
-#lost>div,
-#win>div {
-	font-size: 50px;
+#lost > div,
+#win > div {
+  font-size: 50px;
 }
 
 #minefield {
-	position: relative;
-	left: 50%;
-	transform: translate(-50%, 0%);
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #grid {
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	padding: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  padding: 0;
 }
 
 #cover {
-	z-index: 9;
-	background-color: rgba(0, 0, 0, 0);
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
+  z-index: 9;
+  background-color: rgba(0, 0, 0, 0);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .square {
-	position: relative;
-	float: left;
-	width: 25px;
-	height: 25px;
-	background: #111;
-	border: 1px solid #555;
-	transition: all 0.2s;
-	color: #ddd;
-	text-align: center;
-	line-height: 25px;
-	font-weight: bold;
-	font-size: 15px;
-	cursor: default;
+  position: relative;
+  float: left;
+  width: 25px;
+  height: 25px;
+  background: #111;
+  border: 1px solid #555;
+  transition: all 0.2s;
+  color: #ddd;
+  text-align: center;
+  line-height: 25px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: default;
 }
 
 .square:not(.found):hover {
-	border-color: #aa0000;
-	cursor: pointer;
+  border-color: #aa0000;
+  cursor: pointer;
 }
 
 .found {
-	animation: color-reveal 0.4s linear;
-	background: #444;
+  animation: color-reveal 0.4s linear;
+  background: #444;
 }
 
 .flag {
-	animation: color-flag 0.7s linear;
+  animation: color-flag 0.7s linear;
 }
 
 .flag:after {
-	content: url('../img/molotov.svg');
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 23px;
+  content: url("../img/molotov.svg");
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 23px;
 }
 
 .mine::after {
-	content: url('../img/police-officer-head.svg');
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 23px;
+  content: url("../img/police-officer-head.svg");
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 23px;
+}
+
+.autosolve-focus {
+  background: #791111;
 }
 
 .debug {
-	background: #b91919;
+  background: #791111;
 }
 
 @keyframes color-reveal {
-	0% {
-		background: #111;
-		color: #111;
-	}
-  
-	50% {
-		background: #ddd;
-		color: #ddd;
-	}
-  
-	100% {
-		background: #444;
-		color: #ddd;
-	}
+  0% {
+    background: #111;
+    color: #111;
   }
 
-  @keyframes color-flag {
-	0% {
-		background: #111;
-	}
-  
-	50% {
-		background: #944;
-	}
-  
-	100% {
-		background: #111;
-	}
+  50% {
+    background: #ddd;
+    color: #ddd;
   }
+
+  100% {
+    background: #444;
+    color: #ddd;
+  }
+}
+
+@keyframes color-flag {
+  0% {
+    background: #111;
+  }
+
+  50% {
+    background: #944;
+  }
+
+  100% {
+    background: #111;
+  }
+}

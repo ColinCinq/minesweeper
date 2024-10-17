@@ -1,66 +1,98 @@
-import * as game from "./gameplay.js"
+import * as game from "./gameplay.js";
 
-export function singlePointEntry(grid, x, y) {
-    let flags = grid.getSurroundCells(x, y, 'flag'),
-        unrelvealed = grid.getSurroundCells(x, y, 'unrevealed noflag'),
-        value = grid.getCell(x, y),
-        newData = false
+const revealTime = 1000;
 
-    switch (value - flags.length) {
-        case unrelvealed.length:
-            unrelvealed.forEach(coord => {
-                game.placeFlag(grid, coord[0], coord[1])
-                newData = true
-            })
-            break
-        case 0:
-            unrelvealed.forEach(coord => {
-                if (!grid.isRevealed(coord[0], coord[1])) {
-                    let value = grid.revealCell(coord[0], coord[1])
-                    game.displayCell(grid, $('.square[data-x=' + coord[0] + '][data-y=' + coord[1] + ']'), value)
-                    newData = true
-                }
-            })
-        default:
-            break
-    }
+function displayAutoSolve(grid, coord, coordOrigin) {
+  let cell = $(".square[data-x=" + coord[0] + "][data-y=" + coord[1] + "]"),
+    cellOrigin = $(
+      ".square[data-x=" + coordOrigin[0] + "][data-y=" + coordOrigin[1] + "]"
+    ),
+    time = revealTime;
 
-    return newData
+  if (value != 0) {
+    cell.text(value);
+  } else {
+    time = game.display0(grid, coord);
+  }
+
+  cellOrigin.addClass("autosolve-focus");
+  cell.addClass("found");
+  setTimeout(() => {
+    cellOrigin.removeClass("autosolve-focus");
+  }, time);
+
+  if (grid.getUnrevealedCells().length == config.numberOfMines) winGame(grid);
 }
 
+export function singlePointEntry(grid, coord) {
+  let flags = grid.getSurroundCells(coord, "flag"),
+    unrelvealed = grid.getSurroundCells(coord, "unrevealed noflag"),
+    value = grid.getCell(coord),
+    newData = false;
 
-export function recurSinglePointEntry(grid, x, y) {
-    let clusters = [getCluster(grid, x, y)]
+  switch (value - flags.length) {
+    case unrelvealed.length:
+      unrelvealed.forEach((coordNeighbour) => {
+        game.placeFlag(grid, coordNeighbour);
+        newData = true;
+      });
+      break;
+    case 0:
+      unrelvealed.forEach((coordNeighbour) => {
+        if (!grid.isRevealed(coordNeighbour)) {
+          let value = grid.revealCell(coordNeighbour);
+          game.displayCell(
+            grid,
+            $(
+              ".square[data-x=" +
+              coordNeighbour[0] +
+              "][data-y=" +
+              coordNeighbour[1] +
+              "]"
+            ),
+            value
+          );
+          newData = true;
+        }
+      });
+    default:
+      break;
+  }
 
-    clusters.forEach((cluster) => {
-        let newData = false
-        do {
-            cluster.forEach((coord) => {
-                newData = singlePointEntry(grid, coord[0], coord[1])
-            })
-        } while (newData)
-    })
+  return newData;
 }
 
+export function recurSinglePointEntry(grid, coord) {
+  let clusters = [getCluster(grid, coord)];
 
+  clusters.forEach((cluster) => {
+    let newData = false;
+    do {
+      cluster.forEach((coordCell) => {
+        newData = singlePointEntry(grid, coordCell);
+      });
+    } while (newData);
+  });
+}
 
-export function getCluster(grid, x, y, cluster) {
-    cluster = cluster ? cluster : []
+export function getCluster(grid, coord, cluster) {
+  cluster = cluster ? cluster : [];
 
-    if (!cluster.containsArray([x, y]))
-        cluster.push([x, y])
+  if (!cluster.containsArray(coord)) cluster.push(coord);
 
-    if (grid.isRevealed(x, y)) {
-        grid.getSurroundCells(x, y, 'unrevealed noflag').forEach((coord) => {
-            if (!cluster.containsArray(coord))
-                getCluster(grid, coord[0], coord[1], cluster)
-        })
-    } else if (!grid.isFlag(x, y)) {
-        grid.getSurroundCells(x, y, 'revealed').forEach((coord) => {
-            if (!cluster.containsArray(coord))
-                getCluster(grid, coord[0], coord[1], cluster)
-        })
-    }
+  if (grid.isRevealed(coord)) {
+    grid
+      .getSurroundCells(coord, "unrevealed noflag")
+      .forEach((coordNeighbour) => {
+        if (!cluster.containsArray(coordNeighbour))
+          getCluster(grid, coordNeighbour, cluster);
+      });
+  } else if (!grid.isFlag(coord)) {
+    grid.getSurroundCells(coord, "revealed").forEach((coordNeighbour) => {
+      if (!cluster.containsArray(coordNeighbour))
+        getCluster(grid, coordNeighbour, cluster);
+    });
+  }
 
-    return cluster.length > 1 ? cluster : []
+  return cluster.length > 1 ? cluster : [];
 }
